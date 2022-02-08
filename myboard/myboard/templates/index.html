@@ -40,5 +40,51 @@
         </tr>
     </table>
 
+    <!-- 추가 -->
+    <!-- 처음으로 -->
+    <a href="?page=1">처음</a>
+
+    <!-- 이전페이지 -->
+    {% if list.has_previous %}
+        <a href="?page={{ list.previous_page_number }}">이전</a>
+    {% else %}
+        <a>이전</a>
+    {% endif %}
+
+    <!-- 페이징 -->
+    {% for page_num in list.paginator.page_range %}
+    <!-- paginator.page_range => 1-based range : ?, list안에 있는 페이지넘버를 가져옴 -->
+        {% if page_num == list.number %}
+            <b>{{ page_num }}</b>
+        {% else %}
+            <a href="?page={{ page_num }}">{{ page_num }}</a>
+        {% endif %}
+    {% endfor %}
+
+    <!-- 다음페이지 -->
+    {% if list.has_next %}
+        <a href="?page={{ list.next_page_number }}">다음</a>
+    {% else %}
+        <a>다음</a>
+    {% endif %}
+
+    <!-- 끝으로 -->
+    <a href="?page={{list.paginator.num_pages}}">끝</a>
+    <!-- paginator.num_pages 는 총 페이지수를 의미하므로 총페이지수에 해당하는
+        값으로 이동 -->
+    <br/>
+    <br/>
+    <!-- 회원가입 -->
+    <a href="/register/">회원가입</a>
+    <br/>
+
+    <!-- 로그인 -->
+    {% if not request.session.myname %}
+    <a href="login/">로그인</a>
+    {% else %}
+    <a href="logout/">로그아웃</a>
+    {% endif %}
+
+    <!-- 로그아웃 -->
 </body>
 </html>
